@@ -82,7 +82,7 @@ jobs:
           FRONTEND_ECR_REGISTRY: ${{ vars.FRONTEND_ECR_REGISTRY }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t "${FRONTEND_ECR_REGISTRY}:${IMAGE_TAG}"  -t $"{FRONTEND_ECR_REGISTRY}:latest"  ./frontend/.
+          docker build -t "${FRONTEND_ECR_REGISTRY}:${IMAGE_TAG}" -t "${FRONTEND_ECR_REGISTRY}:latest"  ./frontend/.
           docker push "${FRONTEND_ECR_REGISTRY}:${IMAGE_TAG}"
           docker push "${FRONTEND_ECR_REGISTRY}:latest"
 
@@ -90,7 +90,6 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           docker build -t frontend:pr ./frontend/.
-      
       - name: Escribir summary del job (Frontend)
         if: always()
         env:
