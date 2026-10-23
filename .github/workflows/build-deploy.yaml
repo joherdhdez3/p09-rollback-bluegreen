@@ -35,12 +35,9 @@ jobs:
           BACKEND_ECR_REGISTRY: ${{ vars.BACKEND_ECR_REGISTRY }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build \
-            -t $BACKEND_ECR_REGISTRY:$IMAGE_TAG \
-            -t $BACKEND_ECR_REGISTRY:latest \
-            ./backend/.
-          docker push $BACKEND_ECR_REGISTRY:$IMAGE_TAG
-          docker push $BACKEND_ECR_REGISTRY:latest
+          docker build -t "${BACKEND_ECR_REGISTRY}:${IMAGE_TAG}" -t "${BACKEND_ECR_REGISTRY}:latest" ./backend/.
+          docker push "${BACKEND_ECR_REGISTRY}:${IMAGE_TAG}"
+          docker push "${BACKEND_ECR_REGISTRY}:latest"
 
       - name: Build local de la imagen Backend (validación PR)
         if: github.event_name == 'pull_request'
@@ -85,12 +82,9 @@ jobs:
           FRONTEND_ECR_REGISTRY: ${{ vars.FRONTEND_ECR_REGISTRY }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build \
-            -t $FRONTEND_ECR_REGISTRY:$IMAGE_TAG \
-            -t $FRONTEND_ECR_REGISTRY:latest \
-            ./frontend/.
-          docker push $FRONTEND_ECR_REGISTRY:$IMAGE_TAG
-          docker push $FRONTEND_ECR_REGISTRY:latest
+          docker build -t "${FRONTEND_ECR_REGISTRY}:${IMAGE_TAG}"  -t $"{FRONTEND_ECR_REGISTRY}:latest"  ./frontend/.
+          docker push "${FRONTEND_ECR_REGISTRY}:${IMAGE_TAG}"
+          docker push "${FRONTEND_ECR_REGISTRY}:latest"
 
       - name: Build local de la imagen Frontend (validación PR)
         if: github.event_name == 'pull_request'
